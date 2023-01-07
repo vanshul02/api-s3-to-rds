@@ -14,7 +14,7 @@
     "compile": "tsc",
     "fix": "gts fix",
     "dev": "npx tsnd --respawn src/index.ts",
-    "start": "npx tsc node ."
+    "start": "node --loader ts-node/esm src/index.ts"
   },
   "dependencies": {
     "body-parser": "^1.20.1",
