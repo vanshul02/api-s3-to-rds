@@ -20,13 +20,13 @@ const addUsers = async (req: Request, res: Response) => {
           (err, result: ResponseResult, fields) => {
             if (err) {
               console.log('addUsers ERR', err);
-              res.status(409).json(err.message);
+              return res.status(409).json(err.message);
             }
             if (fields) console.log('addUsers FIELDS', fields);
             if (result) {
               console.log('addUsers RESULT', result);
               if (result.affectedRows === users.length)
-                res.status(201).json(users);
+                return res.status(201).json(users);
             }
           }
         );

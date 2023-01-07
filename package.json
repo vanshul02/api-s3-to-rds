@@ -13,7 +13,7 @@
     "compile": "tsc",
     "fix": "gts fix",
     "dev": "npx tsnd --respawn src/index.ts",
-    "start": "npx tsc src/index.ts node src/index.js",
+    "start": "node --loader ts-node/esm src/index.ts",
     "prepare": "npm.cmd run compile",
     "pretest": "npm.cmd run compile",
     "posttest": "npm.cmd run lint"
