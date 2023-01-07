@@ -17,20 +17,20 @@ const addUsers = async (req: Request, res: Response) => {
         ctx.query(
           'INSERT INTO users (id, name, surname, dob, gender) VALUES ?',
           [params],
-          (err, result: ResponseResult, fields) => {
+          (err, result: ResponseResult) => {
             if (err) {
               console.log('addUsers ERR', err);
               return res.status(409).json(err.message);
-            }
-            if (fields) console.log('addUsers FIELDS', fields);
-            if (result) {
+            } else if (result) {
               console.log('addUsers RESULT', result);
               if (result.affectedRows === users.length)
                 return res.status(201).json(users);
+              else return res.status(207).json('Partially Users Added');
+            } else {
+              return res.status(500).json('Internal Server Error');
             }
           }
         );
-        ctx.end();
       }
     );
   });
