@@ -9,18 +9,12 @@
     "typescript": "^4.9.4"
   },
   "scripts": {
-    "prebuild": "echo --- tslint -c tslint.json -p tsconfig.json --fix",
-    "build": "rimraf build && tsc",
-    "prestart": "npm run build",
     "lint": "gts lint",
     "clean": "gts clean",
     "compile": "tsc",
     "fix": "gts fix",
     "dev": "npx tsnd --respawn src/index.ts",
-    "start": "node .",
-    "prepare": "npm.cmd run compile",
-    "pretest": "npm.cmd run compile",
-    "posttest": "npm.cmd run lint"
+    "start": "npx tsc node ."
   },
   "dependencies": {
     "body-parser": "^1.20.1",
