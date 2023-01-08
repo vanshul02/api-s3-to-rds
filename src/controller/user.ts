@@ -27,7 +27,12 @@ export const isAuthenticated = (
 export const addUsers = async (req: Request, res: Response) => {
   const users: Array<DataRequest> = req.body;
   const params: Array<Object> = [];
-  users.map(user => params.push(Object.values(user)));
+  users.map(user => {
+    const [day, month, year] = user.dob.split('/');
+    const newDate = year + '-' + month + '-' + day;
+    user.dob = newDate;
+    params.push(Object.values(user));
+  });
   ctx.connect(err => {
     if (err) console.log('addUsers ERR: ', err);
     ctx.query(

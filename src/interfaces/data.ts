@@ -7,7 +7,7 @@ export interface DataRequest {
   id: string;
   name: string;
   surname: string;
-  dob: Date;
+  dob: string;
   gender: Gender;
 }
 
