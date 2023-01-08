@@ -1,8 +1,30 @@
-import {Request, Response} from 'express';
+import {NextFunction, Request, Response} from 'express';
+import * as jwt from 'jsonwebtoken';
 import {DataRequest, ResponseResult} from '../interfaces/data';
 import {con as ctx} from '../database/dbseed';
 
-const addUsers = async (req: Request, res: Response) => {
+export const isAuthenticated = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const tokenHeaderKey = process.env.TOKEN_HEADER_KEY as string;
+  const jwtSecretKey = process.env.JWT_SECRET_KEY as string;
+  try {
+    const token = req.header(tokenHeaderKey) as string;
+    const verified = jwt.verify(token, jwtSecretKey);
+    if (verified) {
+      console.log('Successfully Verified');
+      return next();
+    } else {
+      return res.status(401).send('NOT AUTHORIZED');
+    }
+  } catch (error) {
+    return res.status(401).send(error);
+  }
+};
+
+export const addUsers = async (req: Request, res: Response) => {
   const users: Array<DataRequest> = req.body;
   const params: Array<Object> = [];
   users.map(user => params.push(Object.values(user)));
@@ -35,5 +57,3 @@ const addUsers = async (req: Request, res: Response) => {
     );
   });
 };
-
-export default {addUsers};
